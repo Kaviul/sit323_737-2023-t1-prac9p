@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: user-app
+  labels:
+    app: user-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-app
+  
+  template:
+    metadata:
+      labels:
+        app: user-app
+    spec:
+      containers:
+      - name: user-app
+        image: localhost:5000/image
+        ports:
+          - containerPort: 1334
+        volumeMounts:
+          - name: pv-data
+            mountPath: /data
+            
+      
+        
+      volumes:
+        - name: pv-data
+          persistentVolumeClaim:
+            claimName: pvc-persistent-cfg
+        #emptyDir: {}
+        
+
+
+
